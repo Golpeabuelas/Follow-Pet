@@ -1,11 +1,11 @@
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
-import multer from 'multer'
 import dotenv from 'dotenv'
 
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import Multer from './multer.js'
 
 dotenv.config()
 
@@ -18,9 +18,9 @@ app.use(cors())
 app.use(morgan('dev'))
 app.use(express.urlencoded({ limit: '5mb', extended: true }))
 app.use(express.json({ limit: '5mb' }))
+app.use(Multer)
 
 app.use('/images', express.static(join(__dirname, './uploads')))
-// Configuración de Multer
 
 app.listen(app.get('port'), () => {
     console.log('Server listening on port', app.get('port'));
