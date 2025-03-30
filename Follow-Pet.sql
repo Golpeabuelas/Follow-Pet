@@ -38,6 +38,24 @@ CREATE TABLE if NOT EXISTS mascota(
 	ON UPDATE CASCADE
 );
 
+CREATE TABLE if NOT EXISTS estatus_bandeja(
+	id_estatus SERIAL PRIMARY KEY,
+	estatus VARCHAR(16) NOT NULL
+);
+
+CREATE TABLE if NOT EXISTS bandeja_entrada(
+	id_bandeja SERIAL PRIMARY KEY,
+	id_usuario INT NOT NULL,
+	id_estatus INT NOT NULL,
+	descripcion_mensaje VARCHAR(255),
+	FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) 
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	FOREIGN KEY (id_estatus) REFERENCES estatus_bandeja(id_estatus) 
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+);
+
 CREATE TABLE if NOT EXISTS estatus_publicacion(
     id_estatus SERIAL PRIMARY KEY,
     estatus VARCHAR(16) NOT NULL
@@ -97,18 +115,46 @@ CREATE TABLE if NOT EXISTS publicacion_clinica(
 	ON UPDATE CASCADE
 );
 
-CREATE TABLE if NOT EXISTS bandeja_entrada(
-	id_bandeja SERIAL PRIMARY KEY,
+CREATE TABLE if NOT EXISTS expediente(
+	id_expediente INT PRIMARY KEY,
+	id_mascota INT NOT NULL,
+	FOREIGN KEY (id_expediente) REFERENCES publicacion(id_publicacion)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	FOREIGN KEY (id_mascota) REFERENCES mascota(id_mascota)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+);
+
+CREATE TABLE if NOT EXISTS expediente_usuario(
+	id_expediente INT NOT NULL,
 	id_usuario INT NOT NULL,
-	descripcion_mensaje
+	PRIMARY KEY(id_expediente, id_usuario),
+	FOREIGN KEY (id_expediente) REFERENCES expediente(id_expediente) 
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
 	FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) 
 	ON DELETE CASCADE
 	ON UPDATE CASCADE
 );
 
-CREATE TABLE if NOT EXISTS expediente(
-	id_veterinario INT PRIMARY KEY,
-	
+CREATE TABLE if NOT EXISTS estatus_seguimiento(
+	id_estatus SERIAL PRIMARY KEY,
+	estatus VARCHAR(32) NOT NULL
+);
+
+CREATE TABLE if NOT EXISTS seguimiento(
+	id_seguimiento SERIAL PRIMARY KEY,
+	id_expediente INT NOT NULL,
+	id_estatus INT NOT NULL,
+	titulo_seguimiento VARCHAR(32) NOT NULL,
+	seguimiento VARCHAR(255) NOT NULL,
+	FOREIGN KEY (id_expediente) REFERENCES expediente(id_expediente)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	FOREIGN KEY (id_estatus) REFERENCES estatus_seguimiento(id_estatus)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
 CREATE TABLE if NOT EXISTS chat(
@@ -140,15 +186,39 @@ CREATE TABLE if NOT EXISTS mensaje_chat(
 	ON UPDATE CASCADE
 );
 
+CREATE TABLE if NOT EXISTS calendario(
+	id_calendario SERIAL PRIMARY KEY,
+	id_usuario INT UNIQUE NOT NULL,
+	FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+);
+
+CREATE TABLE if NOT EXISTS eventos(
+	id_eventos SERIAL PRIMARY KEY,
+	id_calendario INT NOT NULL,
+	titulo_evento VARCHAR(16),
+	evento VARCHAR(255),
+	FOREIGN KEY (id_calendario) REFERENCES calendario(id_calendario)
+);
+
 DROP TABLE if EXISTS ubicacion CASCADE;
-DROP TABLE if EXISTS rol_usuario CASCADE;
 DROP TABLE if EXISTS usuario CASCADE;
-DROP TABLE if EXISTS estatus_reporte CASCADE;
-DROP TABLE if EXISTS reporte CASCADE;
+DROP TABLE if EXISTS rol_usuario CASCADE;
+DROP TABLE if EXISTS mascota CASCADE;
+DROP TABLE if EXISTS bandeja_entrada CASCADE;
+DROP TABLE if EXISTS estatus_bandeja CASCADE;
+DROP TABLE if EXISTS publicacion CASCADE;
+DROP TABLE if EXISTS estatus_publicacion CASCADE;
 DROP TABLE if EXISTS reporte_desaparicion CASCADE;
 DROP TABLE if EXISTS reporte_mascota CASCADE;
 DROP TABLE if EXISTS publicacion_clinica CASCADE;
-DROP TABLE if EXISTS mascota CASCADE;
+DROP TABLE if EXISTS expediente CASCADE;
+DROP TABLE if EXISTS expediente_usuario CASCADE;
+DROP TABLE if EXISTS seguimiento CASCADE;
+DROP TABLE if EXISTS estatus_seguimiento CASCADE;
+DROP TABLE if EXISTS calendario CASCADE;
 DROP TABLE if EXISTS chat CASCADE;
 DROP TABLE if EXISTS chat_usuario CASCADE;
 DROP TABLE if EXISTS mensaje_chat CASCADE;
+DROP TABLE if EXISTS eventos CASCADE;
