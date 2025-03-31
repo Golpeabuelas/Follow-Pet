@@ -29,10 +29,12 @@ app.get('/perro', async (req, res) => {
     return res.json(result.rows[0])
 })
 
+app.post('/sex', async (req, res) => {
+    const result = await connection.query('SELECT * FROM rol_usuario')
+    return res.json(result.rows)
+})
+
 app.listen(app.get('port'), () => {
     console.log('Server listening on port', app.get('port'));
     console.log('http://localhost:' + app.get('port'));
 });
-
-const perro = await connection.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'")
-console.log(perro.rows)
