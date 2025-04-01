@@ -10,7 +10,7 @@ Multer.post('/cargarImagen', upload.single('image'), (req, res) => {
     const ruta = renombrar(req.file)
     res.json({ ruta: ruta })
 })
-
+ 
 //Renombra la imagen y guarda la URL
 function renombrar (imagen) {
     //Objeto Date.now() para darle un nombre único a las imagenes subidas
