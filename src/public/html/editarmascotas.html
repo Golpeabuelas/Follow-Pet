@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Mascotas</title>
+    <link rel="icon" href="/imagenes/Gatito_Mamalon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/editarmascotas_styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<nav class="navbar">
+    <input type="checkbox" id="toggle-navbar" class="navbar__checkbox">
+    <label for="toggle-navbar" class="navbar__image">
+        <img src="/imagenes/logo.png" alt="Logo">
+    </label>
+    <div class="navbar__menu">
+        <div class="navbar__buscador">
+            <input type="text" class="navbar__buscador--input" placeholder="Buscar...">
+        </div>
+        <div class="navbar__link"><a href="/html/paginaprincipal.html">Inicio</a></div>
+        <div class="navbar__link"><a href="/html/hacerReporte.html">Crear un reporte</a></div>
+        <div class="navbar__link"><a href="/html/index.html">Salud</a></div>
+        <div class="nabvar__link--img">
+            <a href="/verperfil"><img src="/imagenes/AxelPendejo.jpg" alt="Perfil"></a>
+        </div>
+    </div>
+</nav>
+    <div class="navbar--secondary">
+        <div class="navbar--secondary__wrapper">
+            <a href="/html/verperfil.html" class="navbar--secondary__profile">
+                <span class="material-icons">account_circle</span>
+            </a>
+            <a href="/html/editarreportes.html" class="navbar--secondary__reportes">
+                <span class="material-icons">report_problem</span>
+            </a>
+            <a href="/html/editarmascotas.html" class="navbar--secondary__mascotas">
+                <span class="material-icons">pets</span>
+            </a>
+        </div>
+    </div>
+    <div class="wrapper__editpet">
+        <div class="editpet__fondo">
+            <div class="mascotas">
+                <div class="editpet__title--wrapper">
+                    <h2 class="editpet__title">MASCOTAS</h2>
+                </div>
+                <div class="mascotas__wrapper">
+                    <div class="mascota__content">
+                        <div class="mascota__content--img">
+                            <img src="/imagenes/perroPendejo.jpg" alt="" >
+                        </div>
+                        <div class="mascota__content--name">
+                            Curly
+                        </div>
+                    </div>
+                    <form action="" class="addpet__form">
+                        <input type="submit" value="AGREGAR" class="addpet__submit">
+                    </form>
+                </div>
+            </div>
+            <div class="datos">
+                <div class="datos__title--wrapper">
+                    <h2 class="datos__title">DATOS</h2>
+                </div>
+                <div class="datos__wrapper">
+                    <div class="datos__content">
+                        <form action="" class="datos__form">
+                            <img src="/imagenes/perroPendejo.jpg" alt="" class="datos__form--img">
+                            <div class="datos__form--anotherinfo">
+                                <div class="prev__infoperro1--input">Nombre: Pugberto</div>
+                                <div class="prev__infoperro1--input">Lugar donde se encontró: Ciudad Peluche</div>
+                                <div class="prev__infoperro1--input">Especie: Perro mandril</div>
+                                <div class="prev__infoperro1--input">Color: Negro con blanco</div>
+                                <p class="form__anothertext">¿Tu mascota se ha perdido?</p>
+                                <input type="submit" value="HACER REPORTE" class="datos__form--submit" >
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper__modalmake" style="display: none;">
+        <div class="wrapper__reporte">
+            <div class="previsualizacion">
+                <div class="prevtitle__wrapper">
+                    <h2 class="prev__title">PREVISUALIZACIÓN</h2>
+                </div>
+                <div class="post__profile">
+                    <p class="post__profile--name">¡PERRO GEI!</p>
+                </div>
+                <div class="prev__infoperro1 prevperro__makereporte">
+                    <img src="/imagenes/perroPendejo.jpg" alt="" class="prev__infoperro1--image">
+                    <form action="" class="prev__infoperro1--content">
+                        <div class="prev__infoperro1--input">Nombre: Pugberto</div>
+                        <div class="prev__infoperro1--input">Lugar donde se encontró: Ciudad Peluche</div>
+                        <div class="prev__infoperro1--input">Especie: Perro mandril</div>
+                        <div class="prev__infoperro1--input">Color: Negro con blanco</div>
+                    </form>
+                </div>
+                <div class="prev__infoperro2">
+                    <div class="prev__infoperro2--descriptiontitle1">
+                        <h2 class="prev__infoperro2--descriptiontitle">Descripción:</h2>
+                    </div>
+                    <form action="">
+                        <textarea name="" id="" class="prev__infoperro2--description" disabled placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu justo turpis. Morbi eget orci hendrerit, commodo"></textarea>
+                    </form>
+                </div>
+            </div>
+            <div class="makereporte">
+                <div class="mkreporte__content">
+                    <div class="mkreporte__wrapper--chat">
+                        <h2 class="mkreporte__title--chat">CREACIÓN DEL REPORTE</h2>
+                    </div>
+                    <div class="mkreporte__wrapper">
+                            <form action="" class="mkreporte__wrapper--fondo">
+                                <input type="text" class="prev__infoperro1--input" placeholder="Nombre de tu mascota">
+                                <input type="text" class="prev__infoperro1--input" placeholder="Lugar donde se encontró o se perdió">
+                                <input type="text" class="prev__infoperro1--input" placeholder="¿A qué especie pertenece la mascota?">
+                                <input type="text" class="prev__infoperro1--input" placeholder="Color">
+                                <input type="text" class="prev__infoperro1--input" placeholder="Título de su reporte">
+                                <input type="text" class="prev__infoperro1--input" placeholder="Algun distintivo como collares, etc">
+                                <textarea name="" id="" class="prev__infoperro1--input" placeholder="Más información que puede ayudar a encontrar al amigo peludo"></textarea>
+                                <input type="file" name="" id="" placeholder="Una fotografía de la mascota" class="prev__infoperro1--inputimg" >
+                                <h2>¿De qué tipo es tu reporte?</h2>
+                                <label for="radio1">
+                                    <input type="radio" name="mascota" id="radio1"> Mascota desaparecida
+                                </label>
+                                <label for="radio2">
+                                    <input type="radio" name="mascota" id="radio2"> Encontraste una mascota
+                                </label>
+                            </form>
+                            <input type="submit" class="mkreporte__buttonEnviar" value="CREAR">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper__modal--addpet" style="display: none;">
+        <div class="addpet__fondo">
+            <div class="imagen">
+                <div class="addpet__title--wrapper">
+                    <h2 class="addpet__title">IMÁGEN</h2>
+                </div>
+                <div class="addpet__content">
+                    <img src="/imagenes/AxelPendejo.jpg" alt="" class="prev__infoperro1--image addpet__img">
+                </div>
+            </div>
+            <div class="datospet">
+                <div class="addpet__title--wrapper datospettitle">
+                    <h2 class="addpet__title">DATOS DE LA MASCOTA</h2>
+                </div>
+                <div class="addpet__content">
+                    <form action="" class="mkreporte__wrapper--fondo">
+                        <input type="text" class="prev__infoperro1--input" placeholder="Nombre de tu mascota">
+                        <input type="text" class="prev__infoperro1--input" placeholder="¿A qué especie pertenece la mascota?">
+                        <input type="text" class="prev__infoperro1--input" placeholder="Color">
+                        <input type="file" name="" id="" placeholder="Una fotografía de la mascota" class="prev__infoperro1--inputimg" >
+                    </form>
+                    <input type="submit" class="mkreporte__buttonEnviar" value="AÑADIR">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const reportButton = document.querySelector('.datos__form--submit');
+        const reportModal = document.querySelector('.wrapper__modalmake');
+        const reportContent = document.querySelector('.wrapper__reporte');
+
+        const addPetButton = document.querySelector('.addpet__submit');
+        const addPetModal = document.querySelector('.wrapper__modal--addpet');
+        const addPetContent = document.querySelector('.addpet__fondo');
+
+        // Mostrar modal de reportar
+        reportButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            reportModal.style.display = 'flex';
+        });
+
+        // Ocultar modal de reportar al hacer clic fuera
+        reportModal.addEventListener('click', (event) => {
+            if (!reportContent.contains(event.target)) {
+                reportModal.style.display = 'none';
+            }
+        });
+
+        addPetButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            addPetModal.style.display = 'flex';
+        });
+
+        addPetModal.addEventListener('click', (event) => {
+            if (!addPetContent.contains(event.target)) {
+                addPetModal.style.display = 'none';
+            }
+        });
+    });
+</script>
+</html>

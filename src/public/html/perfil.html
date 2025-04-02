@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Provisional Tests</title>
+
+    <link rel="icon" href="/imagenes/Gatito_Mamalon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/perfil_styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">   
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="main_container">
+        <header></header>
+        
+        <div class="content_container">
+            <div class="contenedor_informacion_perfil">
+                <div class="contenedor_foto_portada">
+                    <img src="/imagenes/imagenChingona.jpg" alt="">
+                </div>
+    
+                <div class="contenedor_foto_perfil">
+                    <img src="/imagenes/AxelPendejo.jpg" alt="">
+                </div>
+    
+                <div class="contenedor_opciones_perfil">
+                    <button class="btn" type="button" id="addPost">+ Nueva Publicación</button>
+                </div>
+    
+                <div class="contenedor_imagenes">
+                    <div class="contenedor_imagenn"></div>
+                </div>
+            </div>
+    
+            <div class="contenedor_informacion_social"></div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <span class="close">&times;</span>
+
+        <div class="modal-content">
+            
+            <form action="" id="formulario_publicacion" class="formulario_publicacion">
+                <div class="publicacion">
+                    <div class="contenedor_izquierda">
+                        <div class="contenedor_imagen">
+                            <label for="imagen_mascota" class="label_for_imagen">Elegir imagen</label>
+                        </div>
+
+                        <div class="contenedor_informacion_destacada">
+                            <input type="text" class="input_titulo" id="titulo_publicacion">
+                            
+                            <textarea class="input_descripcion" id="descripcion_desaparicion"></textarea>
+
+                        </div>
+                    </div>
+
+                    <div class="contenedor_derecha">
+                        <div class="contenedor_subtitulo">
+                            <h2 class="subtitulo">INFORMACIÓN</h2>
+                        </div>
+
+                        <div class="contenedor_informacion">
+                            <input type="text" placeholder="Nombre de tu mascota" id="nombre_mascota">
+                            <input type="text" placeholder="¿A qué especie pertenece tu mascota" id="especie_mascota">
+                            <input type="text" placeholder="Color de tu mascota" id="color_mascota">
+                            <input type="text" placeholder="¿Alguna característica específica?" id="distintivo_mascota">
+
+                            <input type="date" id="fecha_desaparicion">
+                        </div>
+
+                        <div class="contenedor_api_maps">
+                            <input type="text" id="latitud">
+                            <input type="text" id="longitud">
+                        </div>
+                    </div>
+                </div>
+                
+                <input type="file" id="imagen_mascota" style="display: none;">
+            </form>
+                
+                
+        </div>
+    </div>
+
+    <script src="/scripts/javascript/post_functions/addPost.js"></script>
+</body>
+</html>

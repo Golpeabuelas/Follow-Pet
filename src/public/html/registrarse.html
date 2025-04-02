@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="icon" href="/imagenes/Gatito_Mamalon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/registrarse_styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="fondo__iniciosesion">
+        <div class="fondo__iniciosesion--burbujas">
+            <div class="burbujas littlebubble littlebubble1"></div>
+            <div class="burbujas midbubble midbubble1"></div>
+            <div class="burbujas largebubble largebubble1"></div>
+            <div class="burbujas largebubble largebubble2"></div>
+            <div class="burbujas midbubble midbubble2"></div>
+            <div class="burbujas littlebubble littlebubble3"></div>
+            <div class="burbujas littlebubble littlebubble4"></div>
+            <div class="burbujas littlebubble littlebubble5"></div>
+            <div class="burbujas littlebubble littlebubble6"></div>
+            <div class="burbujas largebubble largebubble3"></div>
+            <div class="burbujas midbubble midbubble3"></div>
+            <div class="burbujas largebubble largebubble4"></div>
+            <div class="burbujas midbubble midbubble4"></div>
+            <div class="burbujas littlebubble littlebubble7"></div>
+        </div>
+        <div class="mainlogo">
+            <img src="/imagenes/logo.png" alt="" class="mainpagelogo">
+        </div>
+        <div class="wrapper__iniciosesion">
+            <div class="iniciosesion__infoextra">
+                <img src="/imagenes/logo.png" alt="" class="iniciosesion__infoextra--logo">
+                <p class="iniciosesion__infoextra--text">
+                    ¿Qué esperas a pertenecer a la mejor familia para un dueño de una mascota?
+                </p>
+            </div>
+            <div class="iniciosesion__principal">
+                <h1>REGISTRATE</h1>
+                <div class="decoraciones">
+                    <div class="decoraciones__top"></div>
+                    <div class="decoraciones__bottom"></div>
+                </div>
+                <form action="" class="iniciosesion__form">
+                    <input type="text" class="iniciosesion__input" placeholder="Usuario">
+                    <div class="password-wrapper">
+                        <input type="password" name="password" id="password" class="iniciosesion__input" placeholder="Contraseña">
+                        <span class="material-icons" id="toggle-password">visibility</span>
+                    </div>
+                    <input type="email" class="iniciosesion__input" placeholder="Correo">
+                    <h2>Foto de perfil</h2>
+                    <div class="decoraciones__bottom"></div>
+                    <label for="file-upload" class="file-upload-label">
+                        <i class="fas fa-download"></i>
+                    </label>
+                    <input type="file" id="file-upload" class="file-upload" accept="image/*">
+                    <div class="upload-status aparecer" style="display:none;">
+                        <i class="fas fa-check-circle"></i> Imagen subida correctamente
+                    </div>
+                    <input type="submit" class="iniciosesion__submit registrarseBtn btnmodalubicacion" value="REGISTRARSE">
+                </form>
+                <div class="iniciosesion__anotherinfo">
+                    <p>¿Ya tienes cuenta?<span><a href="">Inicia sesión</a></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal__ubicacion--wrapper" style="display: none;">
+        <div class="modal__ubicacion">
+            <p class="modal__ubicacion--text">
+                Un último paso: <br>¡Agrega tu ubicación!
+                <div class="decoraciones">
+                    <div class="decoraciones__top"></div>
+                    <div class="decoraciones__bottom"></div>
+                </div>
+            </p>
+            <div class="modal__ubicacion--mapa"></div>
+            <form action="" class="modal__ubicacion--form">
+                <input type="submit" class="iniciosesion__submit btnmodalubicacion" value="REGISTRARSE">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer__icons">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon">
+        </div>
+        <div class="footer__content">
+            <img src="/imagenes/logo.png" alt="" class="footer__icon--white">
+            <div class="footer__href">
+                <ul class="footer__links">
+                    <li class="footer__links--itemtitle">Follow Pet</li>
+                    <li class="footer__links--item"><a href="/html/index.html#introduccion">-Introducción</a></li>
+                    <li class="footer__links--item"><a href="/html/index.html#caracteristicas">-Características</a></li>
+                    <li class="footer__links--item"><a href="/html/index.html#comofunciona">-¿Cómo funciona?</a></li>
+                    <li class="footer__links--item"><a href="/html/index.html#mobile">-Aplicación Mobile</a></li>
+                </ul>
+            </div>
+            <div class="footer__href">
+                <ul class="footer__links">
+                    <li class="footer__links--itemtitle">Inicio</li>
+                    <li class="footer__links--item"><a href="/html/paginaprincipal.html">-Inicio</a></li>
+                    <li class="footer__links--itemtitle">Hacer un registro de una mascota:</li>
+                    <li class="footer__links--item linkreporte"><a href="/html/hacerReporte.html">Perdida</a></li>
+                    <li class="footer__links--item linkreporte"><a href="/html/hacerReporte.html">Encontrada</a></li>
+                </ul>
+            </div>
+            <div class="footer__href">
+                <ul class="footer__links">
+                    <li class="footer__links--itemtitle">Salud</li>
+                    <li class="footer__links--item"><a href="/html/paginaprincipal.html">-Datos médicos</a></li>
+                    <li class="footer__links--item"><a href="/html/paginaprincipal.html">-Próximas revisiones médicas.</a></li>
+                </ul>
+            </div>
+            <div class="footer__href">
+                <ul class="footer__links">
+                    <li class="footer__links--itemtitle">Perfil</li>
+                    <li class="footer__links--item"><a href="/html/verperfil.html">-Ver perfil</a></li>
+                    <li class="footer__links--item"><a href="/html/verperfil.html">-Modificar perfil</a></li>
+                    <li class="footer__links--item"><a href="/html/editarreportes.html">-Modificar reportes</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__copyright">Copyright © 2024 <span class="footer__copyright--subrayado"> Traba Inc </span></div>
+    </footer>
+
+    <script>
+const fileUpload = document.querySelector('.file-upload');
+const uploadStatus = document.querySelector('.upload-status');
+
+fileUpload.addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    if (file) {
+        uploadStatus.style.display = 'flex';
+    } else {
+        uploadStatus.style.display = 'none';
+    }
+});
+
+const registrarseBtn = document.querySelector('.registrarseBtn');
+const modalUbicacion = document.querySelector('.modal__ubicacion--wrapper');
+
+registrarseBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    modalUbicacion.style.display = 'flex'; 
+});
+
+window.addEventListener('click', function(event) {
+    if (event.target === modalUbicacion) {
+        modalUbicacion.style.display = 'none';
+    }
+});
+
+const togglePassword = document.querySelector('#toggle-password');
+const passwordInput = document.querySelector('#password');
+
+togglePassword.addEventListener('click', function() {
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        togglePassword.textContent = 'visibility_off';
+    } else {
+        passwordInput.type = 'password';
+        togglePassword.textContent = 'visibility';
+    }
+});
+    </script>
+</body>
+</html>

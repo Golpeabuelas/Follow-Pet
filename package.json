@@ -1,0 +1,22 @@
+{
+  "name": "proyecto-traba-inc-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon ./src/index.js",
+    "start": "node ./src/server_functions/javascript/FUNCION_IMPORTANTE.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "mocha": "^10.8.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.11.4",
+    "nodemon": "^3.1.7",
+    "proyecto-traba-inc-web": "file:",
+    "socket.io": "^4.8.1"
+  }
+}
