@@ -1,42 +1,41 @@
+import ImagesFooter from "./ImagesFooter"
+import Logo from "../images/logo.png"
+import { Link } from "react-router-dom"
+
 export default function Footer() {
     return (
         <>
-            <footer className="w-">
+            <footer className="w-dvw h-fit bg-[#032B30]">
+                <div className="h-100px flex overflow-hidden justify-center items-center mx-[55px] my-0 border-solid border-black border-b-3">
+                    <ImagesFooter/>
+                </div>
+                <div className="w-[100%] grid grid-cols-[repeat(auto-fit, minmax(150px, 1fr))] justify-items-center items-center gap-[20px]">
+                    <img src={Logo} alt="Logo Follow Pet" className="w-[width: clamp(2vw,12vw,15vw)] h-auto grayscale" />
 
+                    <div className="mx-0 my-[50px] flex items-start">
+                        
+                    </div>
+                </div>
             </footer>
         </>
     )
 }
 
 
+
 /*
-footer {
-    width: 100dvw;
-    height: fit-content;
-    background-color: var(--verde);
-}
+<div class="footer__href">
+    <ul class="footer__links">
+        <li class="footer__links--itemtitle">Follow Pet</li>
+        <li class="footer__links--item"><a href="/index#introduccion">-Introducción</a></li>
+        <li class="footer__links--item"><a href="/index#caracteristicas">-Características</a></li>
+        <li class="footer__links--item"><a href="/index#comofunciona">-¿Cómo funciona?</a></li>
+        <li class="footer__links--item"><a href="/index#mobile">-Aplicación Mobile</a></li>
+    </ul>
+</div>
 
-.footer__icons{
-    height: 100px;
-    display: flex;
-    overflow-y: hidden;
-    overflow-x: hidden;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 55px;
-    border-bottom: 3px solid black;
-}
-
-.footer__icons img{
-    height: 71px;
-    width: 100px;
-    filter: grayscale(100%) opacity(0.04);
-}
-
-.footer__icon--white {
-    width: clamp(2vw,12vw,15vw);  
-    height: auto;       
-    filter: grayscale(100%);
+.footer__content > .footer__href{
+    align-items: start;
 }
 
 .footer__href{
@@ -64,18 +63,6 @@ footer {
     text-decoration: underline;
 }
 
-.footer__content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
-    justify-items: center;                                       
-    align-items: center;                                         
-    width: 100%;                                                 
-    gap: 20px;                                                     
-}
-
-.footer__content > .footer__href{
-    align-items: start;
-}
 
 .footer__links--item{
     color: #fff;
@@ -124,37 +111,9 @@ footer {
 
 /*
 <footer>
-    <div class="footer__icons">
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-        <img src="/imagenes/logo.png" alt="" class="footer__icon"/>
-    </div>
     <div class="footer__content">
         <img src="/imagenes/logo.png" alt="" class="footer__icon--white"/>
-            <div class="footer__href">
-                <ul class="footer__links">
-                    <li class="footer__links--itemtitle">Follow Pet</li>
-                    <li class="footer__links--item"><a href="/index#introduccion">-Introducción</a></li>
-                    <li class="footer__links--item"><a href="/index#caracteristicas">-Características</a></li>
-                    <li class="footer__links--item"><a href="/index#comofunciona">-¿Cómo funciona?</a></li>
-                    <li class="footer__links--item"><a href="/index#mobile">-Aplicación Mobile</a></li>
-                </ul>
-            </div>
+            
             <div class="footer__href">
                 <ul class="footer__links">
                     <li class="footer__links--itemtitle">Inicio</li>
