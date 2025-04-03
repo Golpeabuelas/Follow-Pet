@@ -1,38 +1,24 @@
 import ImagesFooter from "./ImagesFooter"
+import FooterNavigation from "./FooterNavigation"
 import Logo from "../images/logo.png"
-import { Link } from "react-router-dom"
 
 export default function Footer() {
     return (
-        <>
             <footer className="w-dvw h-fit bg-[#032B30]">
-                <div className="h-100px flex overflow-hidden justify-center items-center mx-[55px] my-0 border-solid border-black border-b-3">
-                    <ImagesFooter/>
-                </div>
+                <ImagesFooter/>
                 <div className="w-[100%] grid grid-cols-[repeat(auto-fit, minmax(150px, 1fr))] justify-items-center items-center gap-[20px]">
                     <img src={Logo} alt="Logo Follow Pet" className="w-[width: clamp(2vw,12vw,15vw)] h-auto grayscale" />
 
-                    <div className="mx-0 my-[50px] flex items-start">
-                        
-                    </div>
+                    <FooterNavigation titulo={'Follow Pet'} textos={['-Introducción', '-Características', '-¿Cómo funciona?', '-Aplicación Mobile']}/>
                 </div>
             </footer>
-        </>
     )
 }
 
 
 
 /*
-<div class="footer__href">
-    <ul class="footer__links">
-        <li class="footer__links--itemtitle">Follow Pet</li>
-        <li class="footer__links--item"><a href="/index#introduccion">-Introducción</a></li>
-        <li class="footer__links--item"><a href="/index#caracteristicas">-Características</a></li>
-        <li class="footer__links--item"><a href="/index#comofunciona">-¿Cómo funciona?</a></li>
-        <li class="footer__links--item"><a href="/index#mobile">-Aplicación Mobile</a></li>
-    </ul>
-</div>
+
 
 .footer__content > .footer__href{
     align-items: start;
@@ -42,13 +28,6 @@ export default function Footer() {
     margin: 50px 0;
     display: flex;
     align-items: start;
-}
-
-.footer__links--itemtitle {
-    color: #A1EDB8;
-    font-weight: 600;
-    margin: 10px 0;
-    list-style: none;
 }
 
 .footer__links--item > a{
@@ -113,7 +92,15 @@ export default function Footer() {
 <footer>
     <div class="footer__content">
         <img src="/imagenes/logo.png" alt="" class="footer__icon--white"/>
-            
+            <div class="footer__href">
+                <ul class="footer__links">
+                    <li class="footer__links--itemtitle">Follow Pet</li>
+                    <li class="footer__links--item"><a href="/index#introduccion">-Introducción</a></li>
+                    <li class="footer__links--item"><a href="/index#caracteristicas">-Características</a></li>
+                    <li class="footer__links--item"><a href="/index#comofunciona">-¿Cómo funciona?</a></li>
+                    <li class="footer__links--item"><a href="/index#mobile">-Aplicación Mobile</a></li>
+                </ul>
+            </div>
             <div class="footer__href">
                 <ul class="footer__links">
                     <li class="footer__links--itemtitle">Inicio</li>
