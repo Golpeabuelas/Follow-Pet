@@ -1,13 +1,13 @@
 import LinkItem from "./LinkItem"
 
-export default function FooterNavigation({ titulo, textos }) {
+export default function FooterNavigation({ titulo, textos, estilos }) {
     return(
         <div className="mx-0 my-[50px] flex items-start">
             <ul>
                 <Tittle titulo={titulo}/>
 
-                {textos.forEach(textoLink => {
-                    <li className="text-white list-none no-underline mx-0 my-[7px] text-pretty font-thin"><LinkItem texto={textoLink}/></li>
+                {textos.map(textoLink => {
+                    return(<li className={estilos}><LinkItem texto={textoLink}/></li>)
                 })}               
             </ul>
         </div>
