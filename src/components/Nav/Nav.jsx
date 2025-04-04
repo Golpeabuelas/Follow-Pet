@@ -1,29 +1,34 @@
+import React, { useState } from 'react';
+
 export default function Nav() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
     return(
         <nav>
 
         </nav>
-    )
+    );
 }
 
-/* 
-    <nav class="navbar">
-        <input type="checkbox" id="toggle-navbar" class="navbar__checkbox">
-        <label for="toggle-navbar" class="navbar__image">
-            <img src="/imagenes/logo.png" alt="Logo">
-        </label>
-        <div class="navbar__menu">
-            <div class="navbar__buscador">
-                <input type="text" class="navbar__buscador--input" placeholder="Buscar...">
-            </div>
-            <div class="navbar__link"><a href="/html/paginaprincipal.html">Inicio</a></div>
-            <div class="navbar__link"><a href="/html/hacerReporte.html">Crear un reporte</a></div>
-            <div class="navbar__link"><a href="/html/index.html">Salud</a></div>
-            <div class="nabvar__link--img">
-                <a href="/verperfil"><img src="/imagenes/AxelPendejo.jpg" alt="Perfil"></a>
-            </div>
+/**
+    Dijiste:
+<nav class="navbar">
+    <input type="checkbox" id="toggle-navbar" class="navbar__checkbox">
+    <label for="toggle-navbar" class="navbar__image">
+        <img src="/imagenes/logo.png" alt="Logo">
+    </label>
+    <div class="navbar__menu">
+        <div class="navbar__buscador">
+            <input type="text" class="navbar__buscador--input" placeholder="Buscar...">
         </div>
-    </nav>
+        <div class="navbar__link"><a href="/html/paginaprincipal.html">Inicio</a></div>
+        <div class="navbar__link"><a href="/html/hacerReporte.html">Crear un reporte</a></div>
+        <div class="navbar__link"><a href="/html/index.html">Salud</a></div>
+        <div class="nabvar__link--img">
+            <a href="/verperfil"><img src="/imagenes/AxelPendejo.jpg" alt="Perfil"></a>
+        </div>
+    </div>
+</nav>
     
 .navbar {
     width: 100dvw;
@@ -36,7 +41,6 @@ export default function Nav() {
     position: sticky;
     top: 0;
     z-index: 30;
-    animation: aparecer 0.4s ease-in-out forwards;
 }
 
 .navbar__image img {
@@ -103,5 +107,74 @@ export default function Nav() {
     justify-content: space-around;
     align-items: center;
     width: 90%;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        height: fit-content;
+        flex-direction: column;
+        align-items: center;
+        padding: 1vh 0;
+    }
+
+    .navbar__image img {
+        width: 15dvw;        
+    }
+    
+    .navbar__buscador {
+        width: 90%;
+    }
+    
+    .navbar__buscador > input {
+        width: 100%;
+        margin: 1vh;
+    }
+    
+    .navbar__link {
+        margin: 0.8vh;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .nabvar__link--img {
+        width: 10vw;
+        height: 10vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: inherit;
+    }
+    
+    .nabvar__link--img img {
+        width: 10vw;
+        height: 10vw;
+    }
+
+    .navbar__menu {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        background-color: var(--naranja);
+        padding: 10px 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 20;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar__checkbox:checked ~ .navbar__menu {
+        display: flex;
+    }
+
+    .navbar__menu a {
+        text-decoration: none;
+        color: #000;
+        font-weight: 600;
+        text-align: center;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
 }
 */

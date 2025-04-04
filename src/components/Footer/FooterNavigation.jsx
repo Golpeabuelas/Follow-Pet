@@ -2,7 +2,7 @@ import LinkItem from "./LinkItem"
 
 export default function FooterNavigation({ titulo, textos, estilos }) {
     return(
-        <div className="mx-0 my-[50px] flex items-start">
+        <div className="mx-0 flex items-start">
             <ul>
                 <Tittle titulo={titulo}/>
 
