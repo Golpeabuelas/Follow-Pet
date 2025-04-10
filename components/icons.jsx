@@ -1,13 +1,13 @@
 import { FontAwesome6 } from "@expo/vector-icons"
 
-export default function AddUserIcon() {
+export function AddUserIcon({ size, color }) {
     return (
-        <FontAwesome6 name="user-plus" size={24} color="black" />
+        <FontAwesome6 name="user-plus" color={ color == null ? "#D9D1C8" : color } size={size}/>
     )
 }
 
-export default function UserIcon() {
+export function UserIcon({ size, color }) {
     return(
-        <FontAwesome6 name="user-large" size={24} color="black" />
+        <FontAwesome6 name="user-large" color={ color == null ? "#D9D1C8" : color } size={size}/>
     )
 }
