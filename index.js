@@ -29,8 +29,8 @@ app.get('/perro', async (req, res) => {
     return res.json(result.rows[0])
 })
 
-app.post('/sex', async (req, res) => {
-    const result = await connection.query('SELECT * FROM rol_usuario')
+app.get('/sex', async (req, res) => {
+    const result = await connection.query(`SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';`)
     return res.json(result.rows)
 })
 
