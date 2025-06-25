@@ -3,14 +3,16 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Resend } from "resend";
 import dotenv from 'dotenv';
+import { v4 as uuidv4 } from 'uuid';
 
-import connection from './connection.js';
+import connection from '../connection.js';
+import { verifyToken } from '../functions.js';
 dotenv.config();
 
-const router = Router();
+const session = Router();
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-router.get('/verify-email-already-used/:email', async (req, res) => {
+session.get('/verify-email-already-used/:email', async (req, res) => {
     const { email } = req.params;
 
     try {
@@ -26,7 +28,7 @@ router.get('/verify-email-already-used/:email', async (req, res) => {
     }
 });
 
-router.get('/verify-user-already-used/:user', async (req, res) => {
+session.get('/verify-user-already-used/:user', async (req, res) => {
     const { user } = req.params;
 
     try {
@@ -42,8 +44,7 @@ router.get('/verify-user-already-used/:user', async (req, res) => {
     }
 });
 
-
-router.post('/register', async (req, res) => {
+session.post('/register', async (req, res) => {
     const {
         nombre_usuario,
         correo_usuario,
@@ -59,23 +60,24 @@ router.post('/register', async (req, res) => {
     }
 
     try {
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(contraseña_usuario, saltRounds);
+        const hashedPassword = await bcrypt.hash(contraseña_usuario, 10);
 
-        const ubicacionResult = await connection.query(
-            'INSERT INTO ubicacion (latitud_ubicacion, longitud_ubicacion) VALUES ($1, $2) RETURNING id_ubicacion',
-            [latitud, longitud]
+        const id_ubicacion = uuidv4();
+
+        await connection.query(
+            'INSERT INTO ubicacion (id_ubicacion, latitud_ubicacion, longitud_ubicacion) VALUES ($1, $2, $3)',
+            [id_ubicacion, latitud, longitud]
         );
 
-        const id_ubicacion = ubicacionResult.rows[0].id_ubicacion;
+        const id_usuario = uuidv4();
 
         const usuarioResult = await connection.query(
             `INSERT INTO usuario 
-                (id_ubicacion, id_rol, nombre_usuario, correo_usuario, contraseña_usuario, foto_usuario)
+                (id_usuario, id_ubicacion, id_rol, nombre_usuario, correo_usuario, contraseña_usuario, foto_usuario)
              VALUES 
-                ($1, $2, $3, $4, $5, $6)
+                ($1, $2, $3, $4, $5, $6, $7)
              RETURNING id_usuario, nombre_usuario, foto_usuario`,
-            [id_ubicacion, id_rol, nombre_usuario, correo_usuario, hashedPassword, foto_usuario]
+            [id_usuario, id_ubicacion, id_rol, nombre_usuario, correo_usuario, hashedPassword, foto_usuario]
         );
 
         res.json({
@@ -84,11 +86,12 @@ router.post('/register', async (req, res) => {
             usuario: usuarioResult.rows[0]
         });
     } catch (error) {
+        console.error(error);
         res.json({ status: 500, error: "Error del servidor." });
     }
 });
 
-router.post('/login', async (req, res) => {
+session.post('/login', async (req, res) => {
     const { correo_usuario, contraseña_usuario } = req.body;
 
     if (!correo_usuario || !contraseña_usuario) {
@@ -118,7 +121,7 @@ router.post('/login', async (req, res) => {
             foto_usuario: user.foto_usuario
         };
 
-        const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1000h' });
 
         res.json({ status: 200, token });
     } catch (error) {
@@ -126,8 +129,14 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.get('/get-user-detail/:id', async (req, res) => {
-    const { id } = req.params;
+session.get('/get-user-detail/:token', async (req, res) => {
+    const { token } = req.params;
+
+    const userData = verifyToken(token);
+
+    if (userData.status !== 200) {
+        return res.json({ status: userData.status, error: userData.message });
+    }
 
     try {
         const result = await connection.query(
@@ -139,11 +148,11 @@ router.get('/get-user-detail/:id', async (req, res) => {
                 r.rol,
                 ub.latitud_ubicacion,
                 ub.longitud_ubicacion
-             FROM usuario u
-             JOIN rol_usuario r ON u.id_rol = r.id_rol
-             JOIN ubicacion ub ON u.id_ubicacion = ub.id_ubicacion
-             WHERE u.id_usuario = $1`,
-            [id]
+            FROM usuario u
+            JOIN rol_usuario r ON u.id_rol = r.id_rol
+            JOIN ubicacion ub ON u.id_ubicacion = ub.id_ubicacion
+            WHERE u.id_usuario = $1`,
+            [userData.user.id_usuario]
         );
 
         if (result.rows.length === 0) {
@@ -156,7 +165,7 @@ router.get('/get-user-detail/:id', async (req, res) => {
     }
 });
 
-router.post('/send-authentication-email', async (req, res) => {
+session.post('/send-authentication-email', async (req, res) => {
     const { email } = req.body;
 
     const authCode = Math.floor(100000 + Math.random() * 900000);
@@ -178,7 +187,7 @@ router.post('/send-authentication-email', async (req, res) => {
 
     try {
         await resend.emails.send({
-            from: "Acme <onboarding@resend.dev>",
+            from: "Support <no-reply@folllowpet.com>",
             to: email,
             subject: "Código de autenticación",
             html: bodyAuth,
@@ -187,10 +196,100 @@ router.post('/send-authentication-email', async (req, res) => {
         return res.json({ status: 500, error: "Error al enviar el correo." });
     }
 
-    console.log('si se envio w')
     res.json({ status: 200, message: "Correo enviado correctamente.", code: authCode });
 })
 
-//F0ll0w_P3t_4dm1n1str4d0r
-//chavez.garcia.julian2@gmail.com
-export default router;
+session.put("/update-profile/:token", async (req, res) => {
+    const { token } = req.params
+    const { nombre, foto } = req.body
+
+    const verification = verifyToken(token)
+
+    if (verification.status !== 200) {
+        return res.json({ status: 401, message: verification.message })
+    }
+
+    const idUsuario = verification.user.id_usuario
+
+    if (!nombre || !foto) {
+        return res.json({ status: 400, message: "No se proporcionaron datos válidos para actualizar" })
+    }
+
+    try {
+        const existeNombre = await connection.query( "SELECT id_usuario FROM usuario WHERE nombre_usuario = $1 AND id_usuario <> $2", [nombre, idUsuario] )
+
+        if (existeNombre.rows.length > 0) {
+            return res.json({ status: 409, message: "El nombre de usuario ya está en uso." })
+        }
+
+        await connection.query(`UPDATE usuario SET nombre_usuario = $1, foto_usuario = $2 WHERE id_usuario = $3`,[nombre, foto, idUsuario])
+
+        res.json({ status: 200, message: "Perfil actualizado correctamente" })
+    } catch (error) {
+        console.error("Error al actualizar el perfil:", error.message)
+        res.json({ status: 500, message: "Error al actualizar el perfil" })
+    }
+})
+
+session.put("/update-location", async (req, res) => {
+    const { token, latitud, longitud } = req.body
+
+    if (!token || latitud == null || longitud == null) {
+        return res.json({ status: 400, message: "Faltan datos" })
+    }
+
+    const verificado = verifyToken(token)
+    if (verificado.status !== 200) {
+        return res.json(verificado)
+    }
+
+    const userId = verificado.user.id_usuario
+
+    try {
+        const ubicacionResult = await connection.query("SELECT id_ubicacion FROM usuario WHERE id_usuario = $1", [userId])
+
+        if (!ubicacionResult.rows || ubicacionResult.rows.length === 0) {
+            return res.json({ status: 404, message: "Ubicación no encontrada" })
+        }
+
+        const idUbicacion = ubicacionResult.rows[0].id_ubicacion
+
+        await connection.query(
+            "UPDATE ubicacion SET latitud_ubicacion = $1, longitud_ubicacion = $2 WHERE id_ubicacion = $3",
+            [latitud, longitud, idUbicacion]
+        )
+
+        res.json({ status: 200, message: "Ubicación actualizada" })
+    } catch (err) {
+        console.error("Error al actualizar la ubicación:", err)
+        res.json({ status: 500, message: "Error del servidor" })
+    }
+})
+
+session.put("/update-password", async (req, res) => {
+    const { token, nueva } = req.body
+
+    if (!token || !nueva) {
+        return res.json({ status: 400, message: "Faltan datos" })
+    }
+
+    const verificado = verifyToken(token)
+    if (verificado.status !== 200) {
+        return res.json(verificado)
+    }
+
+    const userId = verificado.user.id_usuario
+
+    try {
+        const hashed = await bcrypt.hash(nueva, 10)
+
+        await connection.query("UPDATE usuario SET contraseña_usuario = $1 WHERE id_usuario = $2",[hashed, userId])
+
+        res.json({ status: 200, message: "Contraseña actualizada" })
+    } catch (err) {
+        console.error("Error al actualizar la contraseña:", err)
+        res.json({ status: 500, message: "Error del servidor" })
+    }
+})
+
+export default session;

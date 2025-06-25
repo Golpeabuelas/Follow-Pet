@@ -1,0 +1,164 @@
+CREATE TABLE IF NOT EXISTS ubicacion(
+    id_ubicacion VARCHAR PRIMARY KEY,
+    latitud_ubicacion DECIMAL(6,2),
+    longitud_ubicacion DECIMAL(6,2)
+);
+
+CREATE TABLE IF NOT EXISTS rol_usuario (
+    id_rol VARCHAR PRIMARY KEY,
+    rol VARCHAR(16) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS usuario(
+    id_usuario VARCHAR PRIMARY KEY,
+    id_ubicacion VARCHAR NOT NULL,
+    id_rol VARCHAR NOT NULL,
+    nombre_usuario VARCHAR(16) UNIQUE NOT NULL,
+    correo_usuario VARCHAR(255) UNIQUE NOT NULL,
+    contraseña_usuario VARCHAR(255) NOT NULL,
+    foto_usuario VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id_ubicacion) REFERENCES ubicacion(id_ubicacion) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_rol) REFERENCES rol_usuario(id_rol) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS mascota(
+    id_mascota VARCHAR PRIMARY KEY,
+    id_usuario VARCHAR NOT NULL,
+    nombre_mascota VARCHAR(30) NOT NULL,
+    edad_mascota VARCHAR(30) NOT NULL,
+    color_mascota VARCHAR(30) NOT NULL,
+    foto_mascota VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS estatus_bandeja(
+    id_estatus VARCHAR PRIMARY KEY,
+    estatus VARCHAR(16) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS bandeja_entrada(
+    id_bandeja VARCHAR PRIMARY KEY,
+    id_usuario VARCHAR NOT NULL,
+    id_estatus VARCHAR NOT NULL,
+    descripcion_mensaje VARCHAR(255),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_estatus) REFERENCES estatus_bandeja(id_estatus) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS estatus_publicacion(
+    id_estatus VARCHAR PRIMARY KEY,
+    estatus VARCHAR(16) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS publicacion(
+    id_publicacion VARCHAR PRIMARY KEY,
+    id_usuario VARCHAR NOT NULL,
+    id_estatus VARCHAR NOT NULL,
+    titulo_publicacion VARCHAR(30) NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_estatus) REFERENCES estatus_publicacion(id_estatus) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS reporte_desaparicion(
+    id_reporte VARCHAR PRIMARY KEY,
+    id_ubicacion_desaparicion VARCHAR NOT NULL,
+    fecha_desaparicion DATE NOT NULL,
+    descripcion_desaparicion VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id_reporte) REFERENCES publicacion(id_publicacion) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_ubicacion_desaparicion) REFERENCES ubicacion(id_ubicacion) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS reporte_mascota(
+    id_reporte VARCHAR PRIMARY KEY,
+    nombre_mascota VARCHAR(30) NOT NULL,
+    edad_mascota VARCHAR(30) NOT NULL,
+    color_mascota VARCHAR(30) NOT NULL,
+    distintivo_mascota VARCHAR(30) NOT NULL,
+    foto_mascota VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id_reporte) REFERENCES publicacion(id_publicacion) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS publicacion_clinica(
+    id_publicacion VARCHAR PRIMARY KEY,
+    id_ubicacion VARCHAR NOT NULL,
+    telefono_clinica VARCHAR NOT NULL,
+    servicios_clinica VARCHAR(255) NOT NULL,
+    foto_clinica VARCHAR(255) NOT NULL,
+    enlace_web VARCHAR(255),
+    FOREIGN KEY (id_publicacion) REFERENCES publicacion(id_publicacion) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_ubicacion) REFERENCES ubicacion(id_ubicacion) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS expediente(
+    id_expediente VARCHAR PRIMARY KEY,
+    id_mascota VARCHAR NOT NULL,
+    FOREIGN KEY (id_expediente) REFERENCES publicacion(id_publicacion) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_mascota) REFERENCES mascota(id_mascota) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS expediente_usuario(
+    id_expediente VARCHAR NOT NULL,
+    id_usuario VARCHAR NOT NULL,
+    PRIMARY KEY(id_expediente, id_usuario),
+    FOREIGN KEY (id_expediente) REFERENCES expediente(id_expediente) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS estatus_seguimiento(
+    id_estatus VARCHAR PRIMARY KEY,
+    estatus VARCHAR(32) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS seguimiento(
+    id_seguimiento VARCHAR PRIMARY KEY,
+    id_expediente VARCHAR NOT NULL,
+    id_estatus VARCHAR NOT NULL,
+    titulo_seguimiento VARCHAR(32) NOT NULL,
+    seguimiento VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id_expediente) REFERENCES expediente(id_expediente) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_estatus) REFERENCES estatus_seguimiento(id_estatus) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS chat(
+    id_chat VARCHAR PRIMARY KEY,
+    id_publicacion VARCHAR NOT NULL,
+    FOREIGN KEY (id_publicacion) REFERENCES publicacion(id_publicacion) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS chat_usuario(
+    id_chat VARCHAR NOT NULL,
+    id_usuario VARCHAR NOT NULL,
+    PRIMARY KEY (id_chat, id_usuario),
+    FOREIGN KEY (id_chat) REFERENCES chat(id_chat) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS mensaje_chat(
+    id_mensaje VARCHAR PRIMARY KEY,
+    id_chat VARCHAR NOT NULL,
+    mensaje VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id_chat) REFERENCES chat(id_chat) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS calendario(
+    id_calendario VARCHAR PRIMARY KEY,
+    id_usuario VARCHAR UNIQUE NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS eventos(
+    id_eventos VARCHAR PRIMARY KEY,
+    id_calendario VARCHAR NOT NULL,
+    titulo_evento VARCHAR(16),
+    evento VARCHAR(255),
+    FOREIGN KEY (id_calendario) REFERENCES calendario(id_calendario)
+);
+
+CREATE TABLE IF NOT EXISTS notificacion (
+    id_notificacion VARCHAR PRIMARY KEY,
+    id_mensajero VARCHAR NOT NULL,
+    id_estatus VARCHAR NOT NULL,
+    descripcion_mensaje VARCHAR(255),
+    FOREIGN KEY (id_mensajero) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_estatus) REFERENCES estatus_bandeja(id_estatus) ON DELETE CASCADE ON UPDATE CASCADE
+);

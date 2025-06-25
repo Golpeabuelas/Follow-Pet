@@ -7,8 +7,10 @@ import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 dotenv.config()
 
-import Multer from './multer.js'
-import router from './methods_sessions.js'
+import Multer from './routes/multer.js'
+import session from './routes/session.js'
+import profile from './routes/profile.js'
+import post from './routes/post.js'
 import connection from './connection.js'
 
 const app = express()
@@ -22,7 +24,9 @@ app.use(express.urlencoded({ limit: '5mb', extended: true }))
 app.use(express.json({ limit: '5mb' }))
 
 app.use(Multer)
-app.use(router)
+app.use(session)
+app.use(profile)
+app.use(post)
 
 app.use('/images', express.static(join(__dirname, './uploads')))
 
@@ -39,6 +43,11 @@ app.get('/sex', async (req, res) => {
 app.get('/setsito', async (req, res) => {
     const result = await connection.query(`SELECT * FROM estatus_publicacion`)
     return res.json(result)
+})
+
+app.get('/get-email', async (req, res) => {
+    const result = await connection.query(`SELECT correo_usuario FROM usuario WHERE id_usuario = '8f27e33f-b415-408d-a8e0-9d2bbe432a8d'`)
+    return res.json(result.rows[0].correo_usuario)
 })
 
 app.listen(app.get('port'), () => {
