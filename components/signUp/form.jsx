@@ -2,12 +2,13 @@ import { Dimensions, Image, Modal, Pressable, Text, TextInput, View, TouchableWi
 import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import * as ImagePicker from "expo-image-picker";
-
+import { router } from "expo-router";
 import { UserIcon, CameraIcon, UbiIcon } from "../icons";
 import Logo from "../../assets/images/logo.png";
 import ModalMaps from "./modalMaps";
 
 import { API_URL, uploadImages } from "../../consts.js";
+import TermsScreen from "../../app/terms.js";
 
 const width = Dimensions.get("window").width;
 
@@ -20,6 +21,8 @@ export default function Form({ role }) {
 
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [termsVisible, setTermsVisible] = useState(false);
+    const [modalTermsVisible, setModalTermsVisible] = useState(false)
 
     const [modalVerificationVisible, setModalVerificationVisible] = useState(false);
     const [verificationCode, setVerificationCode] = useState(null);
@@ -32,6 +35,9 @@ export default function Form({ role }) {
         MontserratLight: require("../../assets/fonts/Montserrat-Light.ttf"),
     });
 
+    const handleVisModal = () => {
+        setModalTermsVisible(false)
+    }
 
     const handleLocationSelected = (coords) => {
         setLocation(coords);
@@ -93,15 +99,19 @@ export default function Form({ role }) {
             });
             const data = await res.json();
             if (data.status === 200) {
-                setModalVerificationVisible(true);
                 setVerificationCode(data.code);
+                setTermsVisible(true);
             } else {
                 setErrorMessage("Error enviando el código de verificación.");
             }
         } catch (error) {
             setErrorMessage("Error de conexión.");
         }
+    };
 
+    const acceptTerms = () => {
+        setTermsVisible(false);
+        setModalVerificationVisible(true);
     };
 
     const handleVerifyCodeAndRegister = async () => {
@@ -256,6 +266,43 @@ export default function Form({ role }) {
                 <View className="flex-1 bg-black/40 justify-center items-center">
                     <ModalMaps onLocationSelected={handleLocationSelected} />
                 </View>
+            </Modal>
+
+            <Modal visible={termsVisible} transparent={true} animationType="slide">
+                <View className="flex-1 bg-black/40 justify-center items-center px-6">
+                    <View className="bg-white rounded-lg p-6 w-full max-w-md">
+                        <Text style={{ fontFamily: "Montserrat" }} className="text-lg mb-4 text-center">
+                            ¿Aceptas los términos y condiciones de uso?
+                        </Text>
+                         <Pressable
+                            onPress={() => setModalTermsVisible(true)}
+                            className="bg-[#AAAAAA] rounded-[5px] py-2 mb-3"
+                        >
+                            <Text style={{ fontFamily: "MontserratLight", color: "#fff", textAlign: "center", fontSize: 16 }}>
+                                Ver términos y condiciones
+                            </Text>
+                        </Pressable>
+                        <Pressable
+                            onPress={acceptTerms}
+                            className="bg-[#788384] rounded-[5px] py-3 mb-2"
+                        >
+                            <Text style={{ fontFamily: "Montserrat", color: "#E9E9E9", textAlign: "center", fontSize: 16 }}>
+                                Aceptar
+                            </Text>
+                        </Pressable>
+                        <Pressable
+                            onPress={() => setTermsVisible(false)}
+                        >
+                            <Text style={{ fontFamily: "MontserratLight", color: "#788384", textAlign: "center", fontSize: 16 }}>
+                                Cancelar
+                            </Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
+
+            <Modal visible={modalTermsVisible} transparent={true} animationType="slide">
+                <TermsScreen onPress={handleVisModal}/>
             </Modal>
 
             <Modal visible={modalVerificationVisible} transparent={true} animationType="slide">

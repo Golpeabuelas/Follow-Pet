@@ -193,5 +193,5 @@ async function fetchUserData() {
 
 async function logOut() {
     await AsyncStorage.removeItem("userToken")
-    router.push("/")
+    router.push("/sign_in")
 }
