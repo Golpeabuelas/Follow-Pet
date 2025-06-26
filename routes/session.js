@@ -145,12 +145,9 @@ session.get('/get-user-detail/:token', async (req, res) => {
                 u.nombre_usuario,
                 u.correo_usuario,
                 u.foto_usuario,
-                r.rol,
-                ub.latitud_ubicacion,
-                ub.longitud_ubicacion
+                r.rol
             FROM usuario u
             JOIN rol_usuario r ON u.id_rol = r.id_rol
-            JOIN ubicacion ub ON u.id_ubicacion = ub.id_ubicacion
             WHERE u.id_usuario = $1`,
             [userData.user.id_usuario]
         );
@@ -161,6 +158,7 @@ session.get('/get-user-detail/:token', async (req, res) => {
 
         res.json({ status: 200, usuario: result.rows[0] });
     } catch (error) {
+        console.error("Error al obtener los detalles del usuario:", error);
         res.json({ status: 500, error: "Error del servidor." });
     }
 });
@@ -291,5 +289,8 @@ session.put("/update-password", async (req, res) => {
         res.json({ status: 500, message: "Error del servidor" })
     }
 })
+
+//chavez.garcia.julian2@gmail.com
+//F0ll0w_P3t_4dm1n1str4d0r
 
 export default session;

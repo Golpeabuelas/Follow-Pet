@@ -54,10 +54,12 @@ profile.get("/get-profile-details/:token", async (req, res) => {
             JOIN rol_usuario r ON u.id_rol = r.id_rol
             JOIN ubicacion ub ON u.id_ubicacion = ub.id_ubicacion
             LEFT JOIN mascota m ON m.id_usuario = u.id_usuario
-            LEFT JOIN publicacion p ON p.id_usuario = u.id_usuario
+            LEFT JOIN publicacion p 
+                ON p.id_usuario = u.id_usuario 
+            AND p.id_estatus IN (1, 2, 3)
             LEFT JOIN estatus_publicacion ep ON p.id_estatus = ep.id_estatus
             WHERE u.id_usuario = $1
-            GROUP BY u.id_usuario, r.rol, ub.latitud_ubicacion, ub.longitud_ubicacion
+            GROUP BY u.id_usuario, r.rol, ub.latitud_ubicacion, ub.longitud_ubicacion;
             `,
             [userData.user.id_usuario]
         )
@@ -133,6 +135,56 @@ profile.post("/add-pet", async (req, res) => {
         res.json({ status: 500, message: "Error al registrar la mascota" });
     }
 });
+
+profile.get('/get-notifications/:token', async (req, res) => {
+    const { token } = req.params
+
+    const userData = verifyToken(token)
+    if (userData.status !== 200) {
+        return res.json({ status: userData.status, error: userData.message })
+    }
+
+    const id_usuario = userData.user.id_usuario
+
+    try {
+        const result = await connection.query(`
+            SELECT 
+                n.id_notificacion, 
+                n.descripcion_mensaje, 
+                en.estatus AS estado,
+                u.nombre_usuario AS mensajero_nombre, 
+                u.foto_usuario AS mensajero_foto
+            FROM notificacion n
+            JOIN estatus_notificacion en ON n.id_estatus = en.id_estatus
+            JOIN usuario u ON n.id_mensajero = u.id_usuario
+            WHERE n.id_destinatario = $1
+            ORDER BY n.id_notificacion DESC
+        `, [id_usuario])
+
+        console.log(result.rows)
+        res.json({ status: 200, notifications: result.rows })
+    } catch (error) {
+        console.error('Error al obtener notificaciones:', error)
+        res.json({ status: 500, error: 'Error al obtener notificaciones' })
+    }
+})
+
+profile.post('/mark-notification-read', async (req, res) => {
+    const { id_notificacion } = req.body
+
+    try {
+        await connection.query(
+            `UPDATE notificacion SET id_estatus = 2 WHERE id_notificacion = $1`,
+            [id_notificacion]
+        )
+
+        res.json({ status: 200, message: "Notificación marcada como leída" })
+    } catch (error) {
+        console.error("Error al marcar notificación como leída:", error)
+        res.json({ status: 500, error: "No se pudo marcar como leída" })
+    }
+})
+
 
 //F0ll0w_P3t_4dm1n1str4d0r
 
