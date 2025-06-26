@@ -1,4 +1,4 @@
-export const API_URL = 'http://192.168.0.6:3000';
+export const API_URL = 'https://follow-pet.onrender.com';
 
 export const uploadImages = async (uri) => {
     const fileName = uri.split('/').pop();

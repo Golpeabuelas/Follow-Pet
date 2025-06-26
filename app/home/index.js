@@ -1,13 +1,13 @@
 import { useRouter } from "expo-router"
 import { Pressable, View, Text, Image, ScrollView, TextInput, FlatList, KeyboardAvoidingView, Platform } from "react-native"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useFonts } from "expo-font"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { API_URL } from "../../consts"
 import LoadingScreen from "../../components/loadingScreen"
 
-const filtrosDisponibles = ["Sin filtros", "Reportes", "Perdidos", "Encontrados", "Veterinarios", "Antiguos", "Recientes"]
+const filtrosDisponibles = ["Sin filtros", "Reportes", "Perdidos", "Encontrados", "Veterinarios"]
 
 export default function HomeScreen() {
     const router = useRouter()
@@ -22,32 +22,51 @@ export default function HomeScreen() {
 
     useEffect(() => {
         const cargarPublicaciones = async () => {
-        const token = await AsyncStorage.getItem("userToken")
+            const token = await AsyncStorage.getItem("userToken")
 
-        if (!token) {
-            console.error("Token no encontrado, redirigiendo a inicio de sesión")
-            return
-        }
+            if (!token) {
+                console.error("Token no encontrado, redirigiendo a inicio de sesión")
+                return
+            }
 
-        try {
-            const res = await fetch(`${API_URL}/get-posts-home/${token}`)
-            const data = await res.json()
-            setPublicaciones(data.publicaciones)
-        } catch (err) {
-            console.error("Error al cargar publicaciones:", err)
-        }
+            try {
+                const res = await fetch(`${API_URL}/get-posts-home/${token}`)
+                const data = await res.json()
+                setPublicaciones(data.publicaciones)
+            } catch (err) {
+                console.error("Error al cargar publicaciones:", err)
+            }
 
-        try {
-            const res = await fetch(`${API_URL}/get-user-detail/${token}`)
-            const data = await res.json()
-            setUserPhoto(data.usuario.foto_usuario)
-        } catch (error) {
-            console.error("Error al cargar foto de usuario:", error)
-        }
+            try {
+                const res = await fetch(`${API_URL}/get-user-detail/${token}`)
+                const data = await res.json()
+                setUserPhoto(data.usuario.foto_usuario)
+            } catch (error) {
+                console.error("Error al cargar foto de usuario:", error)
+            }
         }
 
         cargarPublicaciones()
     }, [])
+
+    const publicacionesFiltradas = useMemo(() => {
+        if (!publicaciones || publicaciones.length === 0) return []
+
+        switch (filtroSeleccionado) {
+            case "Sin filtros":
+                return publicaciones
+            case "Reportes":
+                return publicaciones.filter((pub) => pub.id_estatus === 1 || pub.id_estatus === 2)
+            case "Perdidos":
+                return publicaciones.filter((pub) => pub.id_estatus === 1)
+            case "Encontrados":
+                return publicaciones.filter((pub) => pub.id_estatus === 2)
+            case "Veterinarios":
+                return publicaciones.filter((pub) => pub.id_estatus === 3)
+            default:
+                return publicaciones
+        }
+    }, [filtroSeleccionado, publicaciones])
 
     if (!publicaciones.length) {
         return <LoadingScreen />
@@ -86,9 +105,14 @@ export default function HomeScreen() {
                     const activo = filtroSeleccionado === item
 
                     return (
-                    <Pressable onPress={() => setFiltroSeleccionado(item)} className={`h-8 px-3 py-1 rounded-full justify-center ${ activo ? "bg-[#FFBD59]" : "bg-[#444]" }`} >
+                    <Pressable
+                        onPress={() => setFiltroSeleccionado(item)}
+                        className={`h-8 px-3 py-1 rounded-full justify-center ${
+                        activo ? "bg-[#FFBD59]" : "bg-[#444]"
+                        }`}
+                    >
                         <Text className={`text-s ${activo ? "text-black" : "text-white"}`} style={{ fontFamily: "Montserrat" }} >
-                            {item}
+                        {item}
                         </Text>
                     </Pressable>
                     )
@@ -97,7 +121,7 @@ export default function HomeScreen() {
             </View>
 
             <ScrollView className="flex-1 px-6 pt-4" contentContainerStyle={{ paddingBottom: 250 }}>
-                {publicaciones.map((pub) => (
+                {publicacionesFiltradas.map((pub) => (
                     <Pressable
                         key={pub.id_publicacion}
                         onPress={() => router.push(`/home/detail-post/${pub.id_publicacion}`)}

@@ -43,7 +43,7 @@ export default function ChatsScreen() {
     if (!fontsLoaded) return null
 
     return (
-        <ScrollView style={{ paddingTop: insets.top }} className="flex-1 bg-[#FFF9F0] px-6">
+        <ScrollView style={{ paddingTop: insets.top }} className="flex-1 bg-[#FFF9F0] px-6" contentContainerStyle={{ paddingBottom: 250 }}>
             <Text className="text-2xl font-semibold text-[#5E5E5E] mb-4" style={{ fontFamily: "Montserrat" }}>
                 Tus chats
             </Text>

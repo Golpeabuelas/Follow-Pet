@@ -87,7 +87,6 @@ export default function SensitiveSettingsScreen() {
         <View className="flex-1 bg-[#FFF9F0] px-6 py-6">
             <Text className="text-2xl font-bold text-[#5E5E5E] mb-6">Información delicada</Text>
 
-            {/* Mapa */}
             <Text className="text-base text-[#444] mb-2">Ubicación</Text>
             {location && (
                 <MapView
@@ -104,7 +103,6 @@ export default function SensitiveSettingsScreen() {
                 </MapView>
             )}
 
-            {/* Modal confirmación */}
             <Modal visible={showModal} transparent animationType="fade">
                 <View className="flex-1 justify-center items-center bg-black/50">
                     <View className="bg-white p-6 rounded-xl w-80">
@@ -129,7 +127,6 @@ export default function SensitiveSettingsScreen() {
                 </View>
             </Modal>
 
-            {/* Contraseña */}
             <View className="mt-6">
                 <View className="flex-row justify-between items-center mb-1">
                     <Text className="text-base text-[#444]">Contraseña</Text>

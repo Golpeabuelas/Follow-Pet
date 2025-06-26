@@ -17,6 +17,7 @@ const STATUS_LABELS = {
     0: "Archivado",
     1: "Perdido",
     2: "Encontrado",
+    3: "Clínica",
     5: "Eliminado",
     6: "Archivado",
     7: "Archivado"
@@ -26,6 +27,7 @@ const STATUS_COLORS = {
     0: "#E6E6E6",  
     1: "#F8D7DA",
     2: "#D1E7FF",
+    3: "#FFCA84",
     5: "#FFFFFF",
     6: "#E6E6E6",
     7: "#E6E6E6"
