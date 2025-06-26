@@ -13,5 +13,9 @@ export async function initSockets(server) {
         socket.on('chat-message', () => {
             socketServer.emit('chat-message')
         })
+
+        socket.on('notification', () => {
+            socketServer.emit('notification')
+        })
     })
 }
