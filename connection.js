@@ -2,18 +2,9 @@ import pg from 'pg'
 import dotenv from 'dotenv'
 dotenv.config()
 
-// Configuración de la conexión a la base de datos PostgreSQL
-// Usar variables de entorno cuando se implemente la bbdd en render hosteada
-// const connection = new pg.Pool({ 
-//     connectionString: process.env.DATABASE_CONNECTION,
-//     ssl: true,
-// })
-
-const connection = new pg.Pool({
-    host: "localhost",
-    database: "Follow_Pet",
-    user: "postgres",
-    password: "root"
+const connection = new pg.Pool({ 
+    connectionString: process.env.DATABASE_CONNECTION,
+    ssl: true,
 })
 
 connection.query('SELECT NOW()', (err, res) => {
