@@ -3,7 +3,7 @@ import { Slot, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Dimensions } from "react-native";
 import Tabs from "../../components/tabsHome";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const { height } = Dimensions.get("window");
 

@@ -7,8 +7,6 @@ import { useRouter } from "expo-router";
 import Logo from "../assets/images/logo.png";
 import { API_URL } from "../consts.js";
 
-const { height } = Dimensions.get("window");
-
 export default function SignIn() {
     const router = useRouter();
 
