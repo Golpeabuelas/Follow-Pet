@@ -43,73 +43,74 @@ export default function UserHealthScreen() {
 		Montserrat: require("../../assets/fonts/Montserrat-Regular.ttf"),
 		MontserratLight: require("../../assets/fonts/Montserrat-Light.ttf"),
 	})
-	if (!fontsLoaded) return null
-
+	
 	useEffect(() => {
 		cargarExpedientesCliente()
 	}, [])
-
+	
 	const cargarExpedientesCliente = async () => {
 		try {
 			setLoading(true)
 			setError("")
 			const token = await AsyncStorage.getItem("userToken")
 			if (!token) throw new Error("No token disponible")
-
-			const res = await fetch(`${API_URL}/get-records-by-client?token=${token}`)
-			const json = await res.json()
-
-			if (json.status === 200) {
-				setExpedientes(json.expedientes)
-			} else {
-				setError(json.error || "Error al cargar expedientes.")
+				
+				const res = await fetch(`${API_URL}/get-records-by-client?token=${token}`)
+				const json = await res.json()
+				
+				if (json.status === 200) {
+					setExpedientes(json.expedientes)
+				} else {
+					setError(json.error || "Error al cargar expedientes.")
+				}
+			} catch (err) {
+				setError("Error de red.")
+				console.error(err)
+			} finally {
+				setLoading(false)
 			}
-		} catch (err) {
-			setError("Error de red.")
-			console.error(err)
-		} finally {
-			setLoading(false)
 		}
-	}
-
-	const openExpediente = (id) => {
-		router.push(`/home/health/record/${id}`)
-	}
-
-	const openModal = (dateStr) => {
-		setSelectedDate(dateStr)
-		setNuevoEvento(eventos[dateStr]?.title || "")
-		setPrioridadSeleccionada(eventos[dateStr]?.priority ?? 0)
-		setModalVisible(true)
-	}
-
-	const guardarEvento = () => {
-		setEventos({
-		...eventos,
-		[selectedDate]: {
-			title: nuevoEvento,
-			description: descripcionEvento,
-			priority: prioridadSeleccionada,
-		},
+		
+		const openExpediente = (id) => {
+			router.push(`/home/health/record/${id}`)
+		}
+		
+		const openModal = (dateStr) => {
+			setSelectedDate(dateStr)
+			setNuevoEvento(eventos[dateStr]?.title || "")
+			setPrioridadSeleccionada(eventos[dateStr]?.priority ?? 0)
+			setModalVisible(true)
+		}
+		
+		const guardarEvento = () => {
+			setEventos({
+				...eventos,
+				[selectedDate]: {
+					title: nuevoEvento,
+					description: descripcionEvento,
+					priority: prioridadSeleccionada,
+				},
+			})
+			setModalVisible(false)
+			setNuevoEvento("")
+			setDescripcionEvento("")
+		}
+		
+		const [eventos, setEventos] = useState({
+			"2025-06-20": { title: "Vacuna anual", priority: 1 },
+			"2025-06-23": { title: "Revisión dental", priority: 0 },
 		})
-		setModalVisible(false)
-		setNuevoEvento("")
-		setDescripcionEvento("")
-	}
-
-	const [eventos, setEventos] = useState({
-		"2025-06-20": { title: "Vacuna anual", priority: 1 },
-		"2025-06-23": { title: "Revisión dental", priority: 0 },
-	})
-
-	const markedDates = Object.entries(eventos).reduce((acc, [date, data]) => {
-		acc[date] = {
-			marked: true,
-			dotColor: data ? prioridadColores[data.priority] : "#ccc",
-		}
-		return acc
-	}, {})
-
+		
+		const markedDates = Object.entries(eventos).reduce((acc, [date, data]) => {
+			acc[date] = {
+				marked: true,
+				dotColor: data ? prioridadColores[data.priority] : "#ccc",
+			}
+			return acc
+		}, {})
+		
+	if (!fontsLoaded) return null
+	
 	return (
 		<>
 			<ScrollView className="flex-1 bg-[#FFF9F0] px-6" style={{ paddingTop: insets.top }} contentContainerStyle={{ paddingBottom: 40 }}>

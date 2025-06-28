@@ -27,7 +27,6 @@ export default function SensitiveAccessScreen() {
 
                 const data = await res.json();
 
-                console.log("Respuesta del servidor:", data);
                 if (data.status !== 200) {
                     setError("No se pudo enviar el código de verificación.");
                     setCodeSent(100000000); 

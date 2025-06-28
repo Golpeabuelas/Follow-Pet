@@ -75,7 +75,7 @@ export default function ClientDetailsScreen() {
 
             if (data.status === 200) {
                 setModalVisible(false)
-                router.push(`/home/records/${data.id_expediente}`)
+                router.push(`/home/health/record/${data.id_expediente}`)
             }
         } catch (err) {
             console.error("Error creando expediente:", err)

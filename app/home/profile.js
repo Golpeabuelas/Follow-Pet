@@ -24,7 +24,7 @@ const linkOptions = [
         label: "Información delicada",
         onPress: async () => {
             const token = await AsyncStorage.getItem("userToken")
-            if (token) router.push("/home/profile-options/sensitive-info")
+            if (token) router.push("/home/profile-options/code-verify-auth")
         }
     },
     {
@@ -195,3 +195,5 @@ async function logOut() {
     await AsyncStorage.removeItem("userToken")
     router.push("/sign_in")
 }
+
+//F0ll0w_P3t_4dm1n1str4d0r
